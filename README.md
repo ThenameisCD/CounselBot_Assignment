@@ -146,7 +146,7 @@ CounselBot_Assignment/
 ### Clone the repository
 
 ```bash
-git clone <https://github.com/ThenameisCD/CounselBot_Assignment.git>
+git clone https://github.com/ThenameisCD/CounselBot_Assignment.git
 cd CounselBot_Assignment
 ```
 
@@ -387,3 +387,4 @@ These choices provide a practical implementation of the assignment requirements 
 ## 15. Disclaimer
 
 CounselBot uses fictional Veridian Legal Hub documents and data for educational purposes. It does not provide legal advice, and its outputs must not be relied upon for real legal decisions.
+
