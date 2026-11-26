@@ -1,0 +1,30 @@
+# Python virtual environment
+.venv/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Python generated files
+__pycache__/
+*.py[cod]
+
+# Testing cache
+.pytest_cache/
+
+# VS Code local settings
+.vscode/
+
+# Local Qdrant database
+/qdrant_storage/
+
+# Frontend dependencies and build output
+node_modules/
+.next/
+out/
+.vercel/
+
+# Operating system files
+.DS_Store
+Thumbs.db

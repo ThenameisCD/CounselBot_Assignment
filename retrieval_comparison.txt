@@ -1,0 +1,206 @@
+﻿COUNSELBOT RETRIEVAL COMPARISON
+======================================================================
+User: adv.rao
+Role: corporate_counsel
+Matters: ['MTR-017']
+Collection: contracts
+Question: Which customer contracts have change-of-control termination rights, and what is the recommended action?
+Dense-only findings-table rank: Not in candidate results
+
+======================================================================
+1. DENSE-ONLY SEARCH - TOP 5
+======================================================================
+
+Rank: 1
+Document: Contract_Review_Playbook.pdf
+Document ID: VLH-CON-001
+Chunk ID: VLH-CON-001:text:8
+Chunk type: text
+Section: 5. Prohibited Clauses
+Heading path: ['5. Prohibited Clauses']
+Pages: [2]
+Score: 0.5033976760787237
+Text: - Unilateral termination by the counterparty without notice and a cure period.
+- Automatic renewal for a period longer than 12 months.
+- Exclusivity or non-compete obligations on Veridian without General Counsel approval.
+- Unlimited liability for Veridian.
+- Assignment by the counterparty without Veridian's prior written consent.
+
+Rank: 2
+Document: Contract_Review_Playbook.pdf
+Document ID: VLH-CON-001
+Chunk ID: VLH-CON-001:text:3
+Chunk type: text
+Section: 1. Purpose and Scope
+Heading path: ['1. Purpose and Scope']
+Pages: [1]
+Score: 0.42287006544714406
+Text: This playbook gives Corporate Counsel and paralegals a consistent way to review third-party contracts. It states Veridian's standard positions, the acceptable fallbacks and the approvals needed to depart from them.
+
+Rank: 3
+Document: Vendor_MSA_Template.pdf
+Document ID: VLH-CON-002
+Chunk ID: VLH-CON-002:text:8
+Chunk type: text
+Section: 6. Termination
+Heading path: ['6. Termination']
+Pages: [1]
+Score: 0.4102967601236925
+Text: 6.1 Veridian may terminate for convenience on 60 days' written notice. 6.2 Either party may terminate for material breach that is not cured within 30 days of notice. 6.3 Veridian may terminate immediately for insolvency, or for breach of Clause 7 or Clause 8.
+
+Rank: 4
+Document: Vendor_MSA_Template.pdf
+Document ID: VLH-CON-002
+Chunk ID: VLH-CON-002:text:9
+Chunk type: text
+Section: 7. Confidentiality
+Heading path: ['7. Confidentiality']
+Pages: [1]
+Score: 0.3586634937547789
+Text: 7.1 Each party shall keep the other's Confidential Information secret and use it only to perform this agreement. 7.2 These obligations last for 5 years after termination, and indefinitely for trade secrets.
+
+Rank: 5
+Document: Vendor_MSA_Template.pdf
+Document ID: VLH-CON-002
+Chunk ID: VLH-CON-002:text:12
+Chunk type: text
+Section: 10. Warranties
+Heading path: ['10. Warranties']
+Pages: [2]
+Score: 0.3527651091330788
+Text: 10.1 The Vendor warrants that it has authority to enter this agreement and that the Services will not infringe third-party rights. 10.2 The Vendor warrants compliance with Veridian's Anti-Bribery and Corruption Policy.
+Hybrid findings-table rank: Rank 13
+
+======================================================================
+2. HYBRID SEARCH - TOP 5
+======================================================================
+
+Rank: 1
+Document: Contract_Review_Playbook.pdf
+Document ID: VLH-CON-001
+Chunk ID: VLH-CON-001:text:3
+Chunk type: text
+Section: 1. Purpose and Scope
+Heading path: ['1. Purpose and Scope']
+Pages: [1]
+Score: 0.031054405392392875
+Text: This playbook gives Corporate Counsel and paralegals a consistent way to review third-party contracts. It states Veridian's standard positions, the acceptable fallbacks and the approvals needed to depart from them.
+
+Rank: 2
+Document: Vendor_MSA_Template.pdf
+Document ID: VLH-CON-002
+Chunk ID: VLH-CON-002:text:12
+Chunk type: text
+Section: 10. Warranties
+Heading path: ['10. Warranties']
+Pages: [2]
+Score: 0.03076923076923077
+Text: 10.1 The Vendor warrants that it has authority to enter this agreement and that the Services will not infringe third-party rights. 10.2 The Vendor warrants compliance with Veridian's Anti-Bribery and Corruption Policy.
+
+Rank: 3
+Document: Contract_Review_Playbook.pdf
+Document ID: VLH-CON-001
+Chunk ID: VLH-CON-001:text:8
+Chunk type: text
+Section: 5. Prohibited Clauses
+Heading path: ['5. Prohibited Clauses']
+Pages: [2]
+Score: 0.030679156908665108
+Text: - Unilateral termination by the counterparty without notice and a cure period.
+- Automatic renewal for a period longer than 12 months.
+- Exclusivity or non-compete obligations on Veridian without General Counsel approval.
+- Unlimited liability for Veridian.
+- Assignment by the counterparty without Veridian's prior written consent.
+
+Rank: 4
+Document: Project_Falcon_Due_Diligence_Memo.pdf
+Document ID: VLH-MTR-017
+Chunk ID: VLH-MTR-017:text:5
+Chunk type: text
+Section: 3. Proposed SPA Protections
+Heading path: ['3. Proposed SPA Protections']
+Pages: [1]
+Score: 0.03055037313432836
+Text: - Conditions precedent: customer waivers, patent assignments, renewal of the Chakan consent to operate.
+- Specific indemnity for the Provident Fund default and for the third pending suit, outside the general indemnity cap.
+- Key-person lock-in: the founder to remain for 24 months, with 15% of the consideration deferred.
+
+Rank: 5
+Document: Vendor_MSA_Template.pdf
+Document ID: VLH-CON-002
+Chunk ID: VLH-CON-002:text:9
+Chunk type: text
+Section: 7. Confidentiality
+Heading path: ['7. Confidentiality']
+Pages: [1]
+Score: 0.030117753623188408
+Text: 7.1 Each party shall keep the other's Confidential Information secret and use it only to perform this agreement. 7.2 These obligations last for 5 years after termination, and indefinitely for trade secrets.
+Reranked findings-table rank: Rank 1
+
+======================================================================
+3. HYBRID + CROSS-ENCODER RERANKING - TOP 5
+======================================================================
+
+Rank: 1
+Document: Project_Falcon_Due_Diligence_Memo.pdf
+Document ID: VLH-MTR-017
+Chunk ID: VLH-MTR-017:table:2
+Chunk type: table
+Section: 2. Key Due Diligence Findings
+Heading path: ['2. Key Due Diligence Findings']
+Pages: [1]
+Score: -1.9051920175552368
+Text: | Area                  | Finding                                                                                                                                   | Risk   | Recommendation                                                     |
+|-----------------------|---------------------------------------------------------------------------------
+
+Rank: 2
+Document: Vendor_MSA_Template.pdf
+Document ID: VLH-CON-002
+Chunk ID: VLH-CON-002:text:9
+Chunk type: text
+Section: 7. Confidentiality
+Heading path: ['7. Confidentiality']
+Pages: [1]
+Score: -7.886969566345215
+Text: 7.1 Each party shall keep the other's Confidential Information secret and use it only to perform this agreement. 7.2 These obligations last for 5 years after termination, and indefinitely for trade secrets.
+
+Rank: 3
+Document: Vendor_MSA_Template.pdf
+Document ID: VLH-CON-002
+Chunk ID: VLH-CON-002:text:12
+Chunk type: text
+Section: 10. Warranties
+Heading path: ['10. Warranties']
+Pages: [2]
+Score: -8.4697265625
+Text: 10.1 The Vendor warrants that it has authority to enter this agreement and that the Services will not infringe third-party rights. 10.2 The Vendor warrants compliance with Veridian's Anti-Bribery and Corruption Policy.
+
+Rank: 4
+Document: Vendor_MSA_Template.pdf
+Document ID: VLH-CON-002
+Chunk ID: VLH-CON-002:text:8
+Chunk type: text
+Section: 6. Termination
+Heading path: ['6. Termination']
+Pages: [1]
+Score: -8.545845031738281
+Text: 6.1 Veridian may terminate for convenience on 60 days' written notice. 6.2 Either party may terminate for material breach that is not cured within 30 days of notice. 6.3 Veridian may terminate immediately for insolvency, or for breach of Clause 7 or Clause 8.
+
+Rank: 5
+Document: Contract_Review_Playbook.pdf
+Document ID: VLH-CON-001
+Chunk ID: VLH-CON-001:text:8
+Chunk type: text
+Section: 5. Prohibited Clauses
+Heading path: ['5. Prohibited Clauses']
+Pages: [2]
+Score: -8.576522827148438
+Text: - Unilateral termination by the counterparty without notice and a cure period.
+- Automatic renewal for a period longer than 12 months.
+- Exclusivity or non-compete obligations on Veridian without General Counsel approval.
+- Unlimited liability for Veridian.
+- Assignment by the counterparty without Veridian's prior written consent.
+
+======================================================================
+COMPARISON COMPLETE
+======================================================================

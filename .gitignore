@@ -1,0 +1,27 @@
+# Python virtual environment
+.venv/
+
+# Environment variables and secrets
+.env
+.env.*
+
+# Python generated files
+__pycache__/
+*.py[cod]
+
+# Testing cache
+.pytest_cache/
+
+# VS Code local settings
+.vscode/
+/qdrant_storage/
+
+!.env.example
+
+# Local VS Code workspace
+*.code-workspace
+
+# Unneeded frontend starter files
+frontend/AGENTS.md
+frontend/README.md
+frontend/public/*.svg
