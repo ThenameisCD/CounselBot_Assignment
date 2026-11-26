@@ -1263,19 +1263,20 @@ The following checks were completed during implementation:
 - The seed file uses `password` and `display_name`, not `pwd` and `name`.
   The authentication function was corrected to use the actual dataset keys.
 
-### 26.8 What this implementation does not do yet
+### 26.8 Implementation status note
 
-- It does not yet protect later endpoints by requiring and verifying the JWT.
-- It does not yet implement `GET /me`, `POST /chat`, or
-  `GET /collections/{role}`.
-- It does not yet enforce role and matter access for document retrieval or SQL.
-- The current demo dataset stores plaintext passwords. This is only suitable
-  for the supplied assignment demonstration; a production system must use
-  securely salted password hashes and proper password verification.
-- The health endpoint checks the API process only, not all dependencies.
+The bullets in this subsection from the earlier learning-guide draft are
+historical notes from the initial authentication milestone. They were
+superseded by the later implementation and testing recorded in Section 29.
+The completed project includes JWT-protected endpoints, `GET /me`, `POST
+/chat`, `GET /collections/{role}`, and role/matter checks in document and SQL
+retrieval. Do not use the historical milestone notes above as a description
+of the final project state.
 
-Do not describe these unfinished features as implemented until they are
-built and tested.
+The demo dataset still stores plaintext passwords. This is acceptable only
+for the supplied fictional assignment demonstration; a production system
+must use securely salted password hashes and proper password verification.
+The health endpoint checks the API process, not every external dependency.
 
 ### 26.9 Simple interview explanation
 
@@ -1749,3 +1750,142 @@ Make sure you can explain these points without reading the code:
 - Which component enforces role and matter permissions?
 - Why can a count still leak confidential information?
 - Why is the current implementation a prototype rather than production-ready?
+
+---
+
+## 29. Final implementation status (26 November 2026)
+
+This section records the implementation that was actually built and tested. It supersedes any earlier progress notes that describe these parts as not yet implemented.
+
+### 29.1 Backend implementation
+
+The backend is organised under `backend/app/`:
+
+- `main.py` provides the FastAPI application and the `/login`, `/chat`, `/me`, `/collections/{role}` and `/health` endpoints.
+- `auth.py` checks the supplied demo credentials, creates signed JWTs and resolves the authenticated user from trusted seed data.
+- `config.py` loads `GROQ_API_KEY`, `GROQ_MODEL` and `JWT_SECRET_KEY` from the root `.env` file. The real `.env` must stay local and must never be committed.
+- `security/access_control.py`, `manifest_loader.py` and `document_access.py` implement manifest-based document permission checks.
+- `security/sql_scoping.py` enforces role-specific SQL table permissions, matter-scoped temporary views and read-only query execution.
+- `rag/ingestion.py` parses and chunks the dataset; `embeddings.py` creates vectors; `vector_store.py` stores them in Qdrant.
+- `dense_retrieval.py` and `bm25_retrieval.py` perform filtered retrieval; `hybrid_retrieval.py` fuses rankings; `reranking.py` uses a cross-encoder to reorder candidates.
+- `document_rag.py` coordinates document retrieval, reranking, answer generation and citations.
+- `sql_rag.py` handles analytical questions using generated SQL and the scoped SQL execution layer.
+
+### 29.2 Frontend implementation
+
+The Next.js frontend is in `frontend/`. It provides:
+
+- Demo login for the eight supplied users.
+- Session restoration using the saved session token, with the backend validating the token.
+- A signed-in identity panel showing username, role and assigned matters.
+- The permitted collection list and a document collection selector.
+- Document RAG and SQL RAG modes.
+- Chat questions, answers, response status and grouped source citations.
+- Sign-out and expired-session handling.
+
+The frontend is a user interface, not a security boundary. All important permissions are enforced by the backend.
+
+### 29.3 Ingestion and indexing results
+
+The completed ingestion audit processed all 19 manifest documents successfully and produced 152 chunks:
+
+- 119 text chunks.
+- 33 table chunks.
+- 0 failed documents.
+- 0 empty chunks.
+- 0 metadata errors.
+- 0 front-matter errors.
+
+The Qdrant persistence check confirmed 152 stored chunks across the five collections:
+
+| Collection | Stored chunks |
+|---|---:|
+| general | 38 |
+| contracts | 42 |
+| litigation | 27 |
+| compliance | 25 |
+| ip | 20 |
+| **Total** | **152** |
+
+### 29.4 Security and behaviour tests completed
+
+The following observed tests passed:
+
+- General Counsel can access permitted matter documents, including the Falcon, Meridian and NovaGen strategy documents.
+- Paralegal access to the Falcon due-diligence memo is blocked where the document's role restriction does not permit the Paralegal role, even though the user has the matter assignment.
+- Corporate Counsel can query permitted contract data but is denied litigation SQL access.
+- Paralegal SQL access is denied.
+- General Counsel can query both permitted SQL tables.
+- Matter scoping prevents Corporate Counsel user `adv.rao`, assigned to MTR-017, from retrieving MTR-031 contract records in the tested query.
+- Prompt injection claiming the user is General Counsel does not grant access to the restricted NovaGen MTR-044 strategy document.
+- A SQL-injection-style request did not cause a destructive operation; separate direct tests confirmed that write statements and direct access to protected base tables are rejected by the SQL execution layer.
+- Citations are produced from retrieved metadata rather than invented by the language model, and are grouped by source document in the frontend.
+
+The evidence files are in the repository's `screenshots/` directory. They include authorised access, blocked access, SQL permission tests, prompt injection, SQL injection and retrieval comparison evidence.
+
+### 29.5 Retrieval comparison result
+
+The recorded comparison used the same question and candidate limit for dense-only, hybrid and hybrid-plus-cross-encoder retrieval. For the tested Falcon change-of-control question:
+
+- Dense-only retrieval did not return the target findings table in its top 20 candidates.
+- Hybrid retrieval returned the target table at rank 13.
+- Hybrid retrieval followed by cross-encoder reranking moved the target table to rank 1.
+
+This is evidence for that particular test question, not proof that reranking always improves every query. Broader evaluation would require more test questions and relevance labels.
+
+### 29.6 Final validation results
+
+The following checks completed successfully:
+
+| Check | Result |
+|---|---|
+| `python -m compileall backend/app` | Passed |
+| `npm run lint` | Passed with no errors or warnings |
+| `npm run build` | Passed; TypeScript and static page generation completed |
+| Screenshot filename check | 9 evidence images present |
+| Git ignore review | `.env`, `.venv`, Qdrant storage and local workspace excluded; `.env.example` included |
+
+### 29.7 Current limitations and honest claims
+
+CounselBot is an educational prototype, not a production legal platform. In particular:
+
+- Demo passwords in the supplied seed dataset are plaintext; production authentication must use securely salted password hashes and an appropriate identity provider.
+- The SQL question-to-table routing uses keyword-based logic and can misclassify indirect or ambiguous questions.
+- The SQL validation and SQLite authorizer provide important restrictions, but this prototype is not a substitute for a mature SQL parser, strict query allow-listing and production database isolation.
+- Retrieval comparison has been demonstrated with a limited test question set; it is not a statistically broad benchmark.
+- The application must be deployed with managed secrets, HTTPS, monitoring, rate limits, robust audit logging and a production-grade identity and database design before handling real confidential legal data.
+
+Do not describe this demo as production-ready or claim that its security controls eliminate every possible attack.
+
+## 30. Keeping Python dependencies current
+
+After installing or removing Python packages in the active project virtual environment, refresh the dependency snapshot from the project root:
+
+```powershell
+python -m pip freeze | Out-File -Encoding ascii backend/requirements.txt
+```
+
+The command records the installed package versions, including transitive dependencies. Run it after the final package installation and before committing changes to `backend/requirements.txt`.
+
+To install the recorded environment on another machine, create and activate a virtual environment, then run:
+
+```powershell
+python -m pip install -r backend/requirements.txt
+```
+
+The project also requires the external services and local configuration described in the root `.env.example`. Never replace placeholders in `.env.example` with real secrets.
+
+## 31. Final GitHub publication checklist
+
+The local implementation and validation are complete. Publication is a separate step and is not complete until the remote repository has been checked.
+
+- [x] Review the staged file list and confirm no real `.env`, token, API key, virtual environment or generated Qdrant storage is included.
+- [x] Confirm `.env.example` contains placeholders only.
+- [x] Confirm the root `README.md`, assignment PDF, learning guide, backend, frontend, dataset, retrieval comparison and evidence screenshots are included.
+- [x] Create the local Git commit.
+- [x] Create the required public GitHub repository.
+- [x] Add the GitHub repository as the `origin` remote and push the project.
+- [x] Open the public repository in a browser and verify the README, source files, dataset and screenshots are visible.
+- [x] Confirm the final repository URL is recorded in the README.
+
+The project has been committed and pushed to the public `main` branch. The local Git working tree was confirmed clean after publication.
