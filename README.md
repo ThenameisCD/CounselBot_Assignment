@@ -146,7 +146,7 @@ CounselBot_Assignment/
 ### Clone the repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone <https://github.com/ThenameisCD/CounselBot_Assignment.git>
 cd CounselBot_Assignment
 ```
 
